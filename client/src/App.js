@@ -6,10 +6,10 @@ class App extends Component {
   render() {
 
     return (
-      <div style={{ backgroundColor: '#FDBA21', height:'100vh' }}>
-        <div style={{ textAlign: 'center', paddingTop: '150px'}}>
+      <div className="App" style={{ backgroundColor: '#FDBA21', height:'100vh' }}>
+        <div style={{ textAlign: 'center'}}>
           <h1>Taco</h1>
-          <img src={LeBronHead} style={{ height: '230px', width: '230px' }} alt='Lebron Head'/>
+          <img className="lebron-head" src={LeBronHead} style={{ height: '230px', width: '230px' }} alt='Lebron Head'/>
           <h1>Tuesday</h1>
         </div>
       </div>
