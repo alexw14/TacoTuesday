@@ -3,8 +3,8 @@ import './StartGameButton.css';
 
 const StartGameButton = (props) => {
     return (
-        <div>
-            <h1 className="StartGameButton">
+        <div className="StartGameButton">
+            <h1>
                 Start Game
             </h1>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomePage.css';
 import StartGameButton from '../../components/StartGameButton/StartGameButton';
+import LeBronHeadLanding from '../../components/LeBronHeadLanding/LeBronHeadLanding';
 
 class HomePage extends React.Component{
 
@@ -8,7 +9,10 @@ class HomePage extends React.Component{
 
     render() {
         return (
-            <div className="LandingPage" style={{ backgroundColor: '#FDBA21', height:'100vh' }}>
+            <div className="LandingPage">
+                <div className="LandingLogo">
+                    <LeBronHeadLanding />
+                </div>
                 <div>
                     <StartGameButton />
                 </div>
