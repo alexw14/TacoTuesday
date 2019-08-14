@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import HomePage from '../HomePage/HomePage';
 import LeBronHead from '../../assets/images/Lebron_Head_Main.png';
 
 class App extends Component {
@@ -8,9 +8,7 @@ class App extends Component {
     return (
       <div className="App" style={{ backgroundColor: '#FDBA21', height:'100vh' }}>
         <div style={{ textAlign: 'center'}}>
-          <h1>Taco</h1>
-          <img className="lebron-head" src={LeBronHead} style={{ height: '230px', width: '230px' }} alt='Lebron Head'/>
-          <h1>Tuesday</h1>
+          <HomePage />
         </div>
       </div>
     );
