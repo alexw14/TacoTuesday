@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import LeBronHead from './assets/images/Lebron_Head_Main.png';
+import LeBronHead from '../../assets/images/Lebron_Head_Main.png';
 
 class App extends Component {
   render() {
