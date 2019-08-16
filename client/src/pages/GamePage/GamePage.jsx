@@ -9,12 +9,12 @@ class GamePage extends Component {
     }
 
     handleMoveLeft = () => {
-        let newPos = this.state.pos - 5;
+        let newPos = this.state.pos - 10;
         this.setState({ pos: newPos });
     }
 
     handleMoveRight = () => {
-        let newPos = this.state.pos + 5;
+        let newPos = this.state.pos + 10;
         this.setState({ pos: newPos });
     }
 

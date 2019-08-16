@@ -6,7 +6,7 @@ const LeBronHeadSlider = (props) => {
 
     return (
         <div>
-            <div onClick={() => props.handleMoveLeft()} style={{ cursor: 'pointer', padding: '20px' }}> Left </div>
+            <button onClick={() => props.handleMoveLeft()} style={{ cursor: 'pointer', padding: '20px' }}> Left </button>
             <div
                 className="LebronHeadSlider"
                 style={{ transform: `translate(${props.pos}px, 0px)` }}
@@ -15,7 +15,7 @@ const LeBronHeadSlider = (props) => {
                     src={MainLebronHead}
                 />
             </div>
-            <div onClick={() => props.handleMoveRight()} style={{ cursor: 'pointer', padding: '20px' }}> Right </div>
+            <button onClick={() => props.handleMoveRight()} style={{ cursor: 'pointer', padding: '20px' }}> Right </button>
         </div>
     );
 };
