@@ -1,17 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MainLebronHead from '../../assets/images/Lebron_Head_Default.png';
 import './LeBronHeadSlider.css'
 
-class LebronHeadSlider extends Component {
-    
+const LeBronHeadSlider = (props) => {
 
-    render() {
-        return (
-            <div className="LebronHeadSlider">
-                <img style={{ height: '15vh' }} src={MainLebronHead} />
+    return (
+        <div>
+            <button onClick={() => props.handleMoveLeft()} style={{ cursor: 'pointer', padding: '20px' }}> Left </button>
+            <div
+                className="LebronHeadSlider"
+                style={{ transform: `translate(${props.pos}px, 0px)` }}
+            >
+                <img style={{ height: '15vh' }}
+                    src={MainLebronHead}
+                />
             </div>
-        )
-    }
-}
+            <button onClick={() => props.handleMoveRight()} style={{ cursor: 'pointer', padding: '20px' }}> Right </button>
+        </div>
+    );
+};
 
-export default LebronHeadSlider
+export default LeBronHeadSlider;
