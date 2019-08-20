@@ -1,7 +1,11 @@
 .StartGameButton {
-    color: purple;
-    font-family: 'Roboto Mono', monospace;
+    color: #552583;
+    font-family: 'Press Start 2P', cursive;
     text-align: center;
-    bottom: 10;
+    margin-top: 50px;
+}
+
+.StartGameButton a {
     text-decoration: none;
+    text-transform: uppercase;
 }

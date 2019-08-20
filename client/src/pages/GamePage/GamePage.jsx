@@ -12,16 +12,15 @@ class GamePage extends Component {
         let newPos = this.state.pos;
         if (direction === 'left') newPos -= 10;
         if (direction === 'right') newPos += 10;
-        if (newPos < -120 || newPos > 120) return;
+        if (newPos < -80 || newPos > 80) return;
         this.setState({ pos: newPos });
     }
 
     render() {
         return (
             <LebronHeadSlider
-                handleMoveLeft={(d) => this.handleMove(d)}
-                handleMoveRight={(d) => this.handleMove(d)}
                 pos={this.state.pos}
+                handleMove={(d) => this.handleMove(d)}
             />
         )
     }
