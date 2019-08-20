@@ -10,7 +10,7 @@ const LeBronHeadSlider = (props) => {
         <div className="game-slider-container">
             <div
                 className='left-arrow'
-                onClick={() => props.handleMoveLeft('left')}
+                onClick={() => props.handleMove('left')}
             >
                 <img src={LeftArrow} />
             </div>
@@ -22,7 +22,7 @@ const LeBronHeadSlider = (props) => {
             </div>
             <div
                 className='right-arrow'
-                onClick={() => props.handleMoveRight('right')}
+                onClick={() => props.handleMove('right')}
             >
                 <img src={RightArrow} />
             </div>

@@ -1,3 +1,17 @@
-.LandingPage {
-    background-color: #FDBA21;
+.LandingPage-Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#taco-text {
+    width: 300px;
+    height: 100%;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+#tuesday-text {
+    width: 300px;
+    height: 100%;
 }
