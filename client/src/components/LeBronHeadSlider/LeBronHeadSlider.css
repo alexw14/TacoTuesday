@@ -1,6 +1,26 @@
-.LebronHeadSlider {
+/* .LebronHeadSlider {
     position: absolute;
     bottom: 0px;
     right: 40%;
     left: 40%;
+} */
+
+.game-slider-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.left-arrow, .right-arrow {
+    cursor: pointer;
+}
+
+.left-arrow img, .right-arrow img {
+    width: 31px;
+    height: 35px;
+}
+
+.LebronHeadSlider img {
+    width: 70px;
+    height: 70px;
 }
