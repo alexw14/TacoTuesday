@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLebronHead from '../../assets/images/Lebron_Head_Default.png';
-import LeftArrow from '../../assets/images/svg/Left_Arrows_31x35_31x35.svg';
-import RightArrow from '../../assets/images/svg/Right_Arrows_31x35.svg';
+import LeftArrow from '../../assets/images/svg/Left_Arrows.svg';
+import RightArrow from '../../assets/images/svg/Right_Arrows.svg';
 import './LeBronHeadSlider.css'
 
 const LeBronHeadSlider = (props) => {
@@ -12,19 +12,19 @@ const LeBronHeadSlider = (props) => {
                 className='left-arrow'
                 onClick={() => props.handleMove('left')}
             >
-                <img src={LeftArrow} />
+                <img src={LeftArrow} alt="left-arrow" />
             </div>
             <div
                 className='LebronHeadSlider'
                 style={{ transform: `translate(${props.pos}px, 0px)` }}
             >
-                <img src={MainLebronHead} />
+                <img src={MainLebronHead} alt="Lebron" />
             </div>
             <div
                 className='right-arrow'
                 onClick={() => props.handleMove('right')}
             >
-                <img src={RightArrow} />
+                <img src={RightArrow} alt="right-arrow" />
             </div>
         </div>
     );
