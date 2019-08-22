@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './GamePage.css';
+import HealthBar from '../../components/HealthBar/HealthBar';
 import LebronHeadSlider from '../../components/LeBronHeadSlider/LeBronHeadSlider';
 
 class GamePage extends Component {
 
     state = {
-        pos: 0
+        pos: 0,
+        health: [1, 1, 1, 1]
     }
 
     handleMove = (direction) => {
@@ -18,10 +20,15 @@ class GamePage extends Component {
 
     render() {
         return (
-            <LebronHeadSlider
-                pos={this.state.pos}
-                handleMove={(d) => this.handleMove(d)}
-            />
+            <div>
+                <HealthBar
+                    health={this.state.health}
+                />
+                <LebronHeadSlider
+                    pos={this.state.pos}
+                    handleMove={(d) => this.handleMove(d)}
+                />
+            </div>
         )
     }
 }
