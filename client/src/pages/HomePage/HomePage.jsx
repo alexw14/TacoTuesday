@@ -11,11 +11,11 @@ class HomePage extends React.Component {
     render() {
         return (
             <div className="LandingPage-Container">
+                <HomePageTacos />
                 <img id="taco-text" src={TacoText} />
                 <LeBronHeadLanding />
                 <img id="tuesday-text" src={TuesdayText} />
                 <StartGameButton />
-                <HomePageTacos />
             </div>
         )
     }
