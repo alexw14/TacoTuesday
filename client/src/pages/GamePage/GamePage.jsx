@@ -7,7 +7,8 @@ class GamePage extends Component {
 
     state = {
         pos: 0,
-        health: [1, 1, 1, 1]
+        numHearts: 4,
+        healthBar: [1, 1, 1, 1]
     }
 
     handleMove = (direction) => {
@@ -18,12 +19,42 @@ class GamePage extends Component {
         this.setState({ pos: newPos });
     }
 
+    handleAddHealth = () => {
+        let currentNumHearts = this.state.numHearts;
+        currentNumHearts = currentNumHearts + 1;
+        if (currentNumHearts > 4) return;
+        let newHealthBar = Array(currentNumHearts).fill(1);
+        while (newHealthBar.length < 4) {
+            newHealthBar.push(0.25);
+        };
+        this.setState({
+            numHearts: currentNumHearts,
+            healthBar: newHealthBar
+        });
+    }
+
+    handleMinusHealth = () => {
+        let currentNumHearts = this.state.numHearts;
+        currentNumHearts = currentNumHearts - 1;
+        if (currentNumHearts < 0) return;
+        let newHealthBar = Array(currentNumHearts).fill(1);
+        while (newHealthBar.length < 4) {
+            newHealthBar.push(0.25);
+        };
+        this.setState({
+            numHearts: currentNumHearts,
+            healthBar: newHealthBar
+        });
+    }
+
     render() {
         return (
             <div>
                 <HealthBar
-                    health={this.state.health}
+                    healthBar={this.state.healthBar}
                 />
+                <button onClick={this.handleAddHealth}>+ Heart</button>
+                <button onClick={this.handleMinusHealth}>- Heart</button>
                 <LebronHeadSlider
                     pos={this.state.pos}
                     handleMove={(d) => this.handleMove(d)}

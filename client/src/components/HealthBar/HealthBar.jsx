@@ -3,8 +3,6 @@ import Heart from '../Heart/Heart';
 
 const HealthBar = (props) => {
 
-  let currentHealth = props.health;
-
   const renderHealthBar = (healths) => (
     healths.map((health, i) => (
       <Heart key={i} opacity={health} />
@@ -18,7 +16,7 @@ const HealthBar = (props) => {
 
   return (
     <div style={style}>
-      {renderHealthBar(currentHealth)}
+      {renderHealthBar(props.healthBar)}
     </div>
   );
 };
