@@ -12,6 +12,8 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(express.static('client/build'));
+
 // for Heroku
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
