@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './GamePage.css';
 import HealthBar from '../../components/HealthBar/HealthBar';
+import GameArea from '../../components/GameArea/GameArea';
 import LebronHeadSlider from '../../components/LeBronHeadSlider/LeBronHeadSlider';
 
 class GamePage extends Component {
@@ -8,7 +9,8 @@ class GamePage extends Component {
     state = {
         pos: 0,
         numHearts: 4,
-        healthBar: [1, 1, 1, 1]
+        healthBar: [1, 1, 1, 1],
+        gameStart: false
     }
 
     handleMove = (direction) => {
@@ -21,7 +23,7 @@ class GamePage extends Component {
 
     handleAddHealth = () => {
         let currentNumHearts = this.state.numHearts;
-        currentNumHearts = currentNumHearts + 1;
+        currentNumHearts += 1;
         if (currentNumHearts > 4) return;
         let newHealthBar = Array(currentNumHearts).fill(1);
         while (newHealthBar.length < 4) {
@@ -35,7 +37,7 @@ class GamePage extends Component {
 
     handleMinusHealth = () => {
         let currentNumHearts = this.state.numHearts;
-        currentNumHearts = currentNumHearts - 1;
+        currentNumHearts -= 1;
         if (currentNumHearts < 0) return;
         let newHealthBar = Array(currentNumHearts).fill(1);
         while (newHealthBar.length < 4) {
@@ -47,6 +49,10 @@ class GamePage extends Component {
         });
     }
 
+    startGame = () => {
+
+    }
+
     render() {
         return (
             <div>
@@ -55,6 +61,7 @@ class GamePage extends Component {
                 />
                 <button onClick={this.handleAddHealth}>+ Heart</button>
                 <button onClick={this.handleMinusHealth}>- Heart</button>
+                <GameArea />
                 <LebronHeadSlider
                     pos={this.state.pos}
                     handleMove={(d) => this.handleMove(d)}
