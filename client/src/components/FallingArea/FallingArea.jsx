@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './GameArea.css';
+import './FallingArea.css';
 import FallingTaco from '../FallingObjects/FallingTaco';
 
-class GameArea extends Component {
+class FallingArea extends Component {
 
   state = {
     x: 0,
@@ -35,4 +35,4 @@ class GameArea extends Component {
   }
 }
 
-export default GameArea;
+export default FallingArea;
