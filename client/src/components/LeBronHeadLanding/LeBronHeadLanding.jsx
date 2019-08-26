@@ -1,6 +1,6 @@
 import React from 'react';
 import './LeBronHeadLanding.css'
-import LebronHead from '../../assets/images/Lebron_Head_Main.png';
+import LebronHead from '../../assets/images/Lebron_Head_Main_Outline.png';
 
 const LeBronHeadLanding = (props) => {
     return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './GamePage.css';
 import HealthBar from '../../components/HealthBar/HealthBar';
-import GameArea from '../../components/GameArea/GameArea';
+import FallingArea from '../../components/FallingArea/FallingArea';
 import LebronHeadSlider from '../../components/LeBronHeadSlider/LeBronHeadSlider';
 
 class GamePage extends Component {
@@ -61,7 +61,7 @@ class GamePage extends Component {
                 />
                 <button onClick={this.handleAddHealth}>+ Heart</button>
                 <button onClick={this.handleMinusHealth}>- Heart</button>
-                <GameArea />
+                <FallingArea />
                 <LebronHeadSlider
                     pos={this.state.pos}
                     handleMove={(d) => this.handleMove(d)}
