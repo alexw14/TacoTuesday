@@ -3,10 +3,13 @@ import TacoDrop from '../../assets/images/svg/Taco_Drop.svg';
 
 const FallingTaco = (props) => {
 
+  const path = Array.from(Array(400).keys());
+  console.log(path)
+
   const style = {
     display: 'flex',
     justifyContent: 'center',
-    transform: `translate(${props.x}px, ${props.y}px)`
+    transform: `translate(${props.startX}px, ${props.startY}px)`
   }
 
   return (

@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+}
+
+.app-container {
+  background-color: #FDBA21;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  width: 375px;
+  height: 667px;
+  border: 1px solid #552583;
+  overflow: hidden;
+}
+
+.hearts-container {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.hearts-container img {
+  width: 25px;
+  height: 25px;
+}
+
+.game-area-container {
+  height: 515px;
+}
+
+.game-slider-container {
+  display: flex;
+  justify-content: center;
+  height: 110px;
+}
+
+.lebron-head-slider {
+  position: relative;
+}
+
+.lebron-head-slider img {
+  width: 100px;
+  height: 100px;
+}
