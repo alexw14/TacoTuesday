@@ -11,48 +11,68 @@ gameArea.innerHTML = `
 `;
 root.appendChild(gameArea);
 
-const heartIconPath = './images/svg/Health.svg';
-const lebronSliderIconPath = './images/Lebron_Head_Default.png'
-
 const heartsContainer = document.querySelector('.hearts-container');
 const healthBar = Array(4).fill(true);
 healthBar.forEach((elem) => {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-  heart.innerHTML = `<img src="${heartIconPath}" />`
   heartsContainer.appendChild(heart);
 });
 
 const gameSliderContainer = document.querySelector('.game-slider-container');
 const slider = document.createElement('div');
 slider.classList.add('lebron-head-slider');
-slider.style.left = '0px';
-slider.innerHTML = `<img src="${lebronSliderIconPath}"/>`;
+slider.style.transform = 'translate(0px, 0px)';
 gameSliderContainer.appendChild(slider);
 
+const gameAreaContainer = document.querySelector('.game-area-container');
+
+// Event Listener for Key Presses
 document.addEventListener('keydown', (event) => {
   // Left Key
   if (event.keyCode === 37) {
-    moveLeft(slider, 10);
+    moveSlider(slider, 10, 'left');
   }
   // Right Key
   if (event.keyCode === 39) {
-    moveRight(slider, 10);
+    moveSlider(slider, 10, 'right');
   }
 });
 
-const moveLeft = (element, amount) => {
-  let current = element.style.left;
-  current = parseInt(current.slice(0, -2));
-  if (current > -140) {
-    element.style.left = `${current - amount}px`;
-  }
+const fallingItems = ['taco', 'heart', 'bball', 'trophy'];
+// randomizeArray(fallingItems);
+
+const makeFalling = (element) => {
+  setInterval(() => {
+    moveDown(element, 1);
+  }, 10)
 }
 
-const moveRight = (element, amount) => {
-  let current = element.style.left;
-  current = parseInt(current.slice(0, -2));
-  if (current < 140) {
-    element.style.left = `${current + amount}px`
-  }
+const generateFallingPiece = () => {
+  const randomX = Math.random() * 375;
+  const fallingObj = document.createElement('div');
+  fallingObj.classList.add(fallingItems[Math.floor(Math.random() * fallingItems.length)], 'game-piece');
+  fallingObj.style.transform = `translate(${randomX}px, 0px)`;
+  gameAreaContainer.appendChild(fallingObj);
+  makeFalling(fallingObj);
 }
+
+let timerId;
+const startGame = () => {
+  timerId = setInterval(() => {
+    const randomNum = Math.random() * 10000;
+    setTimeout(() => {
+      generateFallingPiece();
+    }, randomNum);
+  }, 1000);
+}
+
+const startBtn = document.querySelector('#start-btn');
+startBtn.addEventListener('click', () => {
+  startGame();
+});
+
+const stopbtn = document.querySelector('#stop-btn');
+stopbtn.addEventListener('click', () => {
+  clearInterval(timerId);
+});

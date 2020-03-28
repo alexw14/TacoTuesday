@@ -22,12 +22,16 @@ body {
   height: 40px;
 }
 
-.hearts-container img {
-  width: 25px;
-  height: 25px;
+.hearts-container .heart {
+  background-image: url('../images/svg/Health.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
 }
 
 .game-area-container {
+  display: flex;
   height: 515px;
 }
 
@@ -38,10 +42,34 @@ body {
 }
 
 .lebron-head-slider {
+  background-image: url('../images/Lebron_Head_Default.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
   position: relative;
 }
 
-.lebron-head-slider img {
-  width: 100px;
+.game-area-container .taco {
+  background-image: url('../images/svg/Taco_Drop.svg');
+}
+
+.game-area-container .heart {
+  background-image: url('../images/svg/Health.svg');
+}
+
+.game-area-container .bball {
+  background-image: url('../images/svg/Basketball_Drop.svg');
+}
+
+.game-area-container .trophy {
+  background-image: url('../images/svg/Trophy_Drop.svg');
+}
+
+.game-area-container .game-piece {
+  background-size: contain;
+  background-repeat: no-repeat;
   height: 100px;
+  width: 50px;
+  position: absolute;
 }
