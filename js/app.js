@@ -1,5 +1,5 @@
 // Destructuring modules from Matter.js
-const { Engine, Render, Runner, World, Bodies, Body } = Matter;
+const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
 // Environment variables
 const root = document.querySelector('#root');
@@ -31,62 +31,51 @@ Render.run(render);
 const runner = Runner.create();
 Runner.run(runner, engine);
 
-// Left and Right Border
-const leftBorder = Bodies.rectangle(0, height / 2, 1, height, { isStatic: true });
-const rightBorder = Bodies.rectangle(width, height / 2, 1, height, { isStatic: true });
-World.add(world, leftBorder);
-World.add(world, rightBorder);
-
-// Bottom Wall
-const bottomBorder = Bodies.rectangle(width / 2, height, width, 50, {
-  isStatic: true,
-  render: {
-    fillStyle: 'transparent'
-  }
-});
-World.add(world, bottomBorder);
-
-// Health Bar
-const healthBar = Array(4).fill(true);
-healthBar.forEach((h, i) => {
-  const heart = Bodies.circle(
-    10 + i * 25,
-    10,
-    10,
-    {
-      isStatic: true,
-      render: {
-        sprite: {
-          texture: './images/svg/Health.svg',
-          xScale: 0.1,
-          yScale: 0.1
-        }
-      }
-    }
-  );
-  World.add(world, heart);
-});
+// Left, Right, Bottom Border
+const borders = [
+  // left border
+  Bodies.rectangle(0, height / 2, 1, height, { label: 'border', isStatic: true, render: { fillStyle: 'transparent' } }),
+  // right border
+  Bodies.rectangle(width, height / 2, 1, height, { label: 'border', isStatic: true, render: { fillStyle: 'transparent' } }),
+  // bottom border
+  Bodies.rectangle(width / 2, height, width, 50, { label: 'border', isStatic: true, render: { fillStyle: 'transparent' } })
+]
+World.add(world, borders);
 
 // Lebron Head Slider
-const slider = Bodies.rectangle(
-  width / 2,
-  height / 2,
-  50,
-  50,
-  {
-    isStatic: false,
+const slider = Bodies.rectangle(width / 2, height - 200, 50, 50, {
+  label: 'lebron-head',
+  isStatic: false,
+  inertia: Infinity,
+  render: {
+    sprite: {
+      texture: getIconFilePath('lebron-head'),
+      xScale: 0.15,
+      yScale: 0.15
+    }
+  }
+});
+World.add(world, slider);
+
+// Generate random falling object
+const generateFallingObject = () => {
+  const fallingObj = getRandomObject();
+  const randomX = Math.random() * width;
+  const itemToDrop = Bodies.rectangle(randomX, 0, 50, 50, {
+    label: fallingObj,
     inertia: Infinity,
     render: {
       sprite: {
-        texture: './images/Lebron_Head_Default.png',
-        xScale: 0.15,
-        yScale: 0.15
+        texture: getIconFilePath(fallingObj),
+        xScale: 0.8,
+        yScale: 0.8
       }
     }
-  }
-);
-World.add(world, slider);
+  });
+  World.add(world, itemToDrop);
+}
 
+// Event listener for Left and Right Key Press
 document.addEventListener('keydown', (event) => {
   const { x, y } = slider.velocity;
   if (event.keyCode === 37) {
@@ -97,79 +86,30 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-
-/*
-const root = document.querySelector('#root');
-const gameArea = document.createElement('div');
-gameArea.innerHTML = `
-  <div class="app-container">
-    <div class="game-container">
-      <div class="hearts-container"></div>
-      <div class="game-area-container"></div>
-      <div class="game-slider-container"></div>
-    </div>
-  </div>
-`;
-root.appendChild(gameArea);
-
-const heartsContainer = document.querySelector('.hearts-container');
-const healthBar = Array(4).fill(true);
-healthBar.forEach((elem) => {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heartsContainer.appendChild(heart);
+// Detecting two bodies touching
+Events.on(engine, 'collisionStart', (event) => {
+  event.pairs.forEach((collision) => {
+    const { bodyA, bodyB } = collision;
+    if (!checkCollisionBodies(bodyA, bodyB)) {
+      const toBeRemoved = getFallingBodies(bodyA, bodyB);
+      World.remove(world, toBeRemoved);
+    }
+  });
 });
-
-const gameSliderContainer = document.querySelector('.game-slider-container');
-const slider = document.createElement('div');
-slider.classList.add('lebron-head-slider');
-slider.style.transform = 'translate(0px, 0px)';
-gameSliderContainer.appendChild(slider);
-
-const gameAreaContainer = document.querySelector('.game-area-container');
-
-// Event Listener for Key Presses
-document.addEventListener('keydown', (event) => {
-  // Left Key
-  if (event.keyCode === 37) {
-    moveSlider(slider, 10, 'left');
-  }
-  // Right Key
-  if (event.keyCode === 39) {
-    moveSlider(slider, 10, 'right');
-  }
-});
-
-const fallingItems = ['taco', 'heart', 'bball', 'trophy'];
-// randomizeArray(fallingItems);
-
-const makeFalling = (element) => {
-  setInterval(() => {
-    moveDown(element, 1);
-  }, 10)
-}
-
-const generateFallingPiece = () => {
-  const randomX = Math.random() * 375;
-  const fallingObj = document.createElement('div');
-  fallingObj.classList.add(fallingItems[Math.floor(Math.random() * fallingItems.length)], 'game-piece');
-  fallingObj.style.transform = `translate(${randomX}px, 0px)`;
-  gameAreaContainer.appendChild(fallingObj);
-  makeFalling(fallingObj);
-}
 
 let timerId;
 const startGame = () => {
   timerId = setInterval(() => {
-    const randomNum = Math.random() * 10000;
+    const randomTime = Math.random() * 10000;
     setTimeout(() => {
-      generateFallingPiece();
-    }, randomNum);
-  }, 1000);
+      generateFallingObject();
+    }, randomTime)
+  }, 1000)
 }
 
 const startBtn = document.querySelector('#start-btn');
 startBtn.addEventListener('click', () => {
+  // generateFallingObject();
   startGame();
 });
 
@@ -177,4 +117,3 @@ const stopbtn = document.querySelector('#stop-btn');
 stopbtn.addEventListener('click', () => {
   clearInterval(timerId);
 });
-*/
