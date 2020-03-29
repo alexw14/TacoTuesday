@@ -2,74 +2,39 @@ body {
   margin: 0;
 }
 
-.app-container {
+#app-container {
   background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.game-container {
   width: 375px;
-  height: 667px;
-  border: 1px solid #552583;
-  overflow: hidden;
-}
-
-.hearts-container {
-  display: flex;
-  align-items: center;
-  height: 40px;
-}
-
-.hearts-container .heart {
-  background-image: url('../images/svg/Health.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 24px;
-  height: 24px;
-}
-
-.game-area-container {
-  display: flex;
-  height: 515px;
-}
-
-.game-slider-container {
-  display: flex;
-  justify-content: center;
-  height: 110px;
-}
-
-.lebron-head-slider {
-  background-image: url('../images/Lebron_Head_Default.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 100px;
-  height: 100px;
+  margin: 0 auto;
   position: relative;
 }
 
-.game-area-container .taco {
-  background-image: url('../images/svg/Taco_Drop.svg');
+#score-container {
+  font-family: 'Press Start 2P';
+  font-size: 3em;
+  color: #552583;
+  position: absolute;
+  top: 150px;
 }
 
-.game-area-container .heart {
+#hearts-container {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#hearts-container .heart {
   background-image: url('../images/svg/Health.svg');
-}
-
-.game-area-container .bball {
-  background-image: url('../images/svg/Basketball_Drop.svg');
-}
-
-.game-area-container .trophy {
-  background-image: url('../images/svg/Trophy_Drop.svg');
-}
-
-.game-area-container .game-piece {
   background-size: contain;
   background-repeat: no-repeat;
-  height: 100px;
-  width: 50px;
-  position: absolute;
+  height: 40px;
+  width: 40px;
+}
+
+#hearts-container .heart.fade {
+  opacity: 0.4;
 }
