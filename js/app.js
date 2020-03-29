@@ -5,13 +5,14 @@ const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 const gameArea = document.querySelector('#game-area');
 const width = 375;
 const height = 667;
+let lives = 4;
 let points = 0;
 
 // Create engine
 const engine = Engine.create();
 const world = engine.world;
 // Define gravity in engine
-world.gravity.y = 0.5;
+world.gravity.y = 1;
 
 // Create renderer
 const render = Render.create({
@@ -58,6 +59,14 @@ const slider = Bodies.rectangle(width / 2, height - 200, 50, 50, {
 });
 World.add(world, slider);
 
+// Hearts Display
+const heartsContainer = document.querySelector('#hearts-container');
+Array(lives).fill(true).forEach((h, idx) => {
+  const heart = document.createElement('div');
+  heart.classList.add('heart', `heart-${idx}`);
+  heartsContainer.appendChild(heart);
+});
+
 // Score Display
 const scoreContainer = document.querySelector('#score-container');
 const scoreDisplay = document.createElement('div');
@@ -102,11 +111,19 @@ Events.on(engine, 'collisionStart', (event) => {
     if (!checkCollisionBodies(bodyA, bodyB)) {
       const toBeRemoved = getFallingBodies(bodyA, bodyB);
       if (toBeRemoved) {
+        // If either bodyA or bodyB is lebron head
         if (bodyA.label === 'lebron-head' || bodyB.label === 'lebron-head') {
-          // Scoring
           if (toBeRemoved.label === 'taco') {
-            points += 1;
-            scoreDisplay.innerHTML = `${points}`
+            addScore();
+          }
+          if (toBeRemoved.label === 'trophy' || toBeRemoved.label === 'bball') {
+            minusScore();
+            if (lives === 0) {
+              clearInterval(timerId);
+            }
+          }
+          if (toBeRemoved.label === 'heart') {
+            addHeart();
           }
           World.remove(world, toBeRemoved);
         } else if (bodyA.label === 'border' || bodyB.label === 'border') {
@@ -119,9 +136,7 @@ Events.on(engine, 'collisionStart', (event) => {
 
 let timerId;
 const startGame = () => {
-  // Drop the first object
-  generateFallingObject();
-  // Randomly drop more objects
+  // Randomly drop objects
   timerId = setInterval(() => {
     const randomTime = Math.random() * 10000;
     setTimeout(() => {
@@ -133,9 +148,13 @@ const startGame = () => {
 const startBtn = document.querySelector('#start-btn');
 startBtn.addEventListener('click', () => {
   startGame();
+  startBtn.setAttribute('disabled', true);
+  stopbtn.removeAttribute('disabled');
 });
 
 const stopbtn = document.querySelector('#stop-btn');
 stopbtn.addEventListener('click', () => {
   clearInterval(timerId);
+  startBtn.removeAttribute('disabled');
+  stopbtn.setAttribute('disabled', true);
 });

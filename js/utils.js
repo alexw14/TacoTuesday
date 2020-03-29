@@ -20,13 +20,13 @@ const getFallingBodies = (a, b) => {
 
 const getRandomObject = () => {
   const randomNum = Math.random() * 100;
-  if (randomNum < 50) {
+  if (randomNum < 55) {
     return 'taco';
-  } else if (randomNum >= 50 && randomNum < 70) {
+  } else if (randomNum >= 55 && randomNum < 75) {
     return 'trophy';
-  } else if (randomNum >= 70 && randomNum < 90) {
+  } else if (randomNum >= 75 && randomNum < 95) {
     return 'bball';
-  } else if (randomNum >= 90) {
+  } else if (randomNum >= 95) {
     return 'heart';
   }
 };
@@ -37,6 +37,7 @@ const getIconFilePath = (icon) => {
   if (icon === "bball") return './images/svg/Basketball_Drop.svg';
   if (icon === "heart") return './images/svg/Health.svg';
   if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
+  if (icon === "lebron-hit") return './images/Lebron_Head_Hit.png';
 };
 
 const getRandomXCoordinate = () => {
@@ -57,4 +58,36 @@ const getScaleFromFallingObject = (obj) => {
   } else if (obj === 'heart') {
     return 0.3;
   }
+};
+
+const updateSliderImg = (slider) => {
+  slider.render.sprite.texture = getIconFilePath('lebron-hit');
+  slider.render.sprite.xScale = 0.1;
+  slider.render.sprite.yScale = 0.1;
+  setTimeout(() => {
+    slider.render.sprite.texture = getIconFilePath('lebron-head');
+    slider.render.sprite.xScale = 0.15;
+    slider.render.sprite.yScale = 0.15;
+  }, 1000);
+};
+
+const addScore = () => {
+  points += 1;
+  scoreDisplay.innerHTML = `${points}`
+};
+
+const minusScore = () => {
+  updateSliderImg(slider);
+  lives--;
+  if (lives >= 0) {
+    const heart = document.querySelector(`.heart-${lives}`);
+    heart.classList.add('fade');
+  }
+};
+
+const addHeart = () => {
+  lives++;
+  lives = Math.min(lives, 4);
+  const heart = document.querySelector(`.heart-${lives - 1}`);
+  heart.classList.remove('fade');
 };
