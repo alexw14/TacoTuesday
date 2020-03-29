@@ -1,41 +1,36 @@
-const isTouching = (a, b) => {
-  const aRect = a.getBoundingClientRect();
-  const bRect = b.getBoundingClientRect();
-
-  return !(
-    aRect.top + aRect.height < bRect.top ||
-    aRect.top > bRect.top + bRect.height ||
-    aRect.left + aRect.width < bRect.left ||
-    aRect.left > bRect.left + bRect.width
-  );
-}
-
-const moveSlider = (element, amount, direction) => {
-  let current = element.style.transform.replace('translate', '').match(/-?\d+/g);
-  current = parseInt(current[0]);
-  if (direction === 'left' && current > -140) {
-    element.style.transform = `translate(${current - amount}px, 0px)`;
-  }
-  if (direction === 'right' && current < 140) {
-    element.style.transform = `translate(${current + amount}px, 0px)`;
+const getFallingBodies = (a, b) => {
+  if (a.label === 'lebron-head' || a.label === 'border') {
+    return b;
+  } else {
+    return a;
   }
 }
 
-const moveDown = (element, amount) => {
-  let current = element.style.transform.replace('translate', '').match(/-?\d+/g);
-  let currX = parseInt(current[0]);
-  let currY = parseInt(current[1]);
-  element.style.transform = `translate(${currX}px, ${currY + amount}px)`;
+const checkCollisionBodies = (a, b) => {
+  const fixed = ['lebron-head', 'border'];
+  if (fixed.includes(a.label) && fixed.includes(b.label)) {
+    return true;
+  }
+  return false;
 }
 
-const randomizeArray = (arr) => {
-  let i = arr.length;
-  while (i > 0) {
-    let j = Math.floor(Math.random() * i);
-    i--;
-    let temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
+const getRandomObject = () => {
+  const randomNum = Math.random() * 100;
+  if (randomNum < 50) {
+    return 'taco';
+  } else if (randomNum >= 50 && randomNum < 70) {
+    return 'trophy';
+  } else if (randomNum >= 70 && randomNum < 90) {
+    return 'bball';
+  } else if (randomNum >= 90) {
+    return 'heart';
   }
-  return arr;
 }
+
+const getIconFilePath = (icon) => {
+  if (icon === "taco") return './images/svg/Taco_Drop.svg';
+  if (icon === "trophy") return './images/svg/Trophy_Drop.svg';
+  if (icon === "bball") return './images/svg/Basketball_Drop.svg';
+  if (icon === "heart") return './images/svg/Health.svg';
+  if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
+};
