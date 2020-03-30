@@ -2,32 +2,119 @@ body {
   margin: 0;
 }
 
-#app-container {
+.hidden {
+  display: none !important;
+}
+
+#app {
   background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 375px;
   margin: 0 auto;
+  align-items: center;
   position: relative;
 }
 
-#score-container {
+#app,
+.start-container .taco-text,
+.start-container .tuesday-text, 
+.start-container .lebron-start-head,
+.start-container .start-game-btn,
+.game-container,
+.play-again-container {
+  display: flex;
+  justify-content: center;
+}
+
+#app,
+.start-container,
+.play-again-container {
+  width: 375px;
+}
+
+.start-container,
+.game-container {
+  height: 667px;
+}
+
+.start-container {
+  background-color: #FDBA21;
+  overflow: hidden;
+}
+
+.start-container .tacos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.start-container .tacos .taco {
+  z-index: 1;
+}
+
+.start-container .taco-text {
+  margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.start-container .taco-text img,
+.start-container .tuesday-text img {
+  width: 300px;
+  height: 100%;
+}
+
+.start-container .taco-text,
+.start-container .tuesday-text, 
+.start-container .lebron-start-head,
+.start-container .start-game-btn {
+  position: relative;
+  z-index: 2;
+}
+
+.start-container .lebron-start-head img {
+  width: 275px;
+  height: 100%;
+}
+
+.start-container .start-game-btn {
+  width: 200px;
+  height: 50px;
+  margin: 24px auto;
+  align-items: center;
+  cursor: pointer;
+}
+
+.start-container,
+.game-container .game-area canvas {
+  border-radius: 24px;
+}
+
+.start-container .start-game-btn,
+.score-container,
+.play-again-text {
   font-family: 'Press Start 2P';
-  font-size: 3em;
   color: #552583;
+  text-transform: uppercase;
+}
+
+.start-container .tacos .taco,
+.score-container,
+.hearts-container,
+.play-again-container {
   position: absolute;
+}
+
+.score-container {
+  font-size: 3em;
   top: 150px;
 }
 
-#hearts-container {
+.hearts-container {
   display: flex;
-  position: absolute;
   top: 10px;
   left: 10px;
 }
 
-#hearts-container .heart {
+.hearts-container .heart {
   background-image: url('../images/svg/Health.svg');
   background-size: contain;
   background-repeat: no-repeat;
@@ -35,6 +122,31 @@ body {
   width: 40px;
 }
 
-#hearts-container .heart.fade {
+.hearts-container .heart.fade {
   opacity: 0.4;
+}
+
+.play-again-container {
+  z-index: 2;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play-again-btn {
+  background-image: url('../images/svg/Play.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100px;
+  width: 100px;
+  margin: 81px auto 24px;
+  cursor: pointer;
+}
+
+.play-again-text {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.play-again-text div {
+  margin: 24px 0px;
 }

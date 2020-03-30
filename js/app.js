@@ -1,12 +1,28 @@
+const app = document.querySelector('#app');
+app.innerHTML = `
+  <div class="start-container"></div>
+  <div class="game-container hidden">
+    <div class="hearts-container"></div>
+    <div class="score-container"></div>
+    <div class="game-area"></div>
+  </div>
+  <div class="play-again-container hidden"></div>
+`;
+
 // Destructuring modules from Matter.js
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-// Environment variables
-const gameArea = document.querySelector('#game-area');
+// Environment 
+const gameContainer = document.querySelector('.game-container');
+const gameArea = document.querySelector('.game-area');
 const width = 375;
 const height = 667;
-let lives = 4;
-let points = 0;
+const startingLives = 4;
+const state = {
+  lives: 0,
+  points: 0,
+  timerId: null
+};
 
 // Create engine
 const engine = Engine.create();
@@ -21,8 +37,8 @@ const render = Render.create({
   options: {
     width,
     height,
-    wireframes: false,
-    background: '#FDBA21'
+    background: '#FDBA21',
+    wireframes: false
   }
 });
 
@@ -44,7 +60,7 @@ const borders = [
 ]
 World.add(world, borders);
 
-// Lebron Head Slider
+// Lebron head slider
 const slider = Bodies.rectangle(width / 2, height - 200, 50, 50, {
   label: 'lebron-head',
   isStatic: false,
@@ -59,21 +75,115 @@ const slider = Bodies.rectangle(width / 2, height - 200, 50, 50, {
 });
 World.add(world, slider);
 
-// Hearts Display
-const heartsContainer = document.querySelector('#hearts-container');
-Array(lives).fill(true).forEach((h, idx) => {
-  const heart = document.createElement('div');
-  heart.classList.add('heart', `heart-${idx}`);
-  heartsContainer.appendChild(heart);
+// Landing page
+const startContainer = document.querySelector('.start-container');
+startContainer.innerHTML = `
+  <div class="tacos"></div>
+  <div class="taco-text"></div>
+  <div class="lebron-start-head"></div>
+  <div class="tuesday-text"></div>
+  <div class="start-game-btn"></div>
+`;
+
+// Tacos on start screen
+const startContainerTacos = document.querySelector('.start-container .tacos');
+tacosProps.forEach((t) => {
+  const taco = document.createElement('div');
+  taco.classList.add('taco');
+  taco.style.transform = `translate(${t.x}, ${t.y}) rotate(${t.angle})`;
+  const tacoImg = document.createElement('img');
+  tacoImg.setAttribute('src', getIconFilePath('taco-landing-page'));
+  tacoImg.setAttribute('width', t.width);
+  tacoImg.setAttribute('height', t.height);
+  tacoImg.setAttribute('alt', 'taco');
+  taco.appendChild(tacoImg);
+  startContainerTacos.appendChild(taco);
 });
 
-// Score Display
-const scoreContainer = document.querySelector('#score-container');
+// Taco text
+const tacoText = document.querySelector('.taco-text');
+const tacoTextImg = document.createElement('img');
+tacoTextImg.setAttribute('src', getIconFilePath('taco-text'));
+tacoTextImg.setAttribute('alt', 'taco');
+tacoText.appendChild(tacoTextImg);
+
+// Tuesday text
+const tuesdayText = document.querySelector('.tuesday-text');
+const tuesdayTextImg = document.createElement('img');
+tuesdayTextImg.setAttribute('src', getIconFilePath('tuesday-text'));
+tuesdayTextImg.setAttribute('alt', 'tuesday');
+tuesdayText.appendChild(tuesdayTextImg);
+
+// Lebron head on start screen
+const lebronStart = document.querySelector('.lebron-start-head');
+const lebronStartImg = document.createElement('img');
+lebronStartImg.setAttribute('src', getIconFilePath('lebron-start'));
+lebronStartImg.setAttribute('alt', 'LeBron');
+lebronStart.appendChild(lebronStartImg);
+
+// Start game button
+const startGameBtn = document.querySelector('.start-game-btn');
+startGameBtn.innerHTML = 'Start Game';
+
+// Hearts display
+const heartsContainer = document.querySelector('.hearts-container');
+for (let i = 0; i < startingLives; i++) {
+  const heart = document.createElement('div');
+  heart.classList.add('heart', `heart-${i}`);
+  heartsContainer.appendChild(heart);
+}
+
+// Score display
+const scoreContainer = document.querySelector('.score-container');
 const scoreDisplay = document.createElement('div');
-scoreDisplay.innerHTML = `${points}`;
+scoreDisplay.innerHTML = `${state.points}`;
 scoreContainer.appendChild(scoreDisplay);
 
-// Generate random falling object
+// Play again
+const playAgainContainer = document.querySelector('.play-again-container');
+const playAgainBtn = document.createElement('div');
+playAgainBtn.classList.add('play-again-btn');
+playAgainContainer.appendChild(playAgainBtn);
+const playAgainText = document.createElement('div');
+playAgainText.classList.add('play-again-text');
+playAgainText.innerHTML = `
+  <div>Game Over</div>
+  <div>More Tacos?</div>
+`;
+playAgainContainer.appendChild(playAgainText);
+
+// Game logic
+
+const addScore = () => {
+  if (state.lives > 0) {
+    state.points += 1;
+    scoreDisplay.innerHTML = `${state.points}`;
+  }
+};
+
+const addHeart = () => {
+  if (state.lives < 4 && state.lives > 0) {
+    state.lives++;
+    const heart = document.querySelector(`.heart-${state.lives - 1}`);
+    heart.classList.remove('fade');
+  }
+};
+
+const minusHeart = () => {
+  updateSliderImg(slider);
+  state.lives--;
+  if (state.lives >= 0) {
+    const heart = document.querySelector(`.heart-${state.lives}`);
+    heart.classList.add('fade');
+  }
+  // Game Over
+  if (state.lives === 0) {
+    clearInterval(state.timerId);
+    playAgainContainer.classList.remove('hidden');
+  }
+};
+
+// Generate one random falling object
 const generateFallingObject = () => {
   const fallingObj = getRandomObject();
   const randomX = getRandomXCoordinate();
@@ -92,7 +202,62 @@ const generateFallingObject = () => {
   World.add(world, itemToDrop);
 };
 
-// Event listener for Left and Right Key Press
+const handleGameCalcAndRemoveObj = (bodyA, bodyB) => {
+  const toBeRemoved = findFallingObj(bodyA, bodyB);
+  if (toBeRemoved) {
+    // If either bodyA or bodyB is lebron head
+    if (bodyA.label === 'lebron-head' || bodyB.label === 'lebron-head') {
+      if (toBeRemoved.label === 'taco') {
+        addScore();
+      }
+      if (toBeRemoved.label === 'trophy' || toBeRemoved.label === 'bball') {
+        minusHeart();
+      }
+      if (toBeRemoved.label === 'heart') {
+        addHeart();
+      }
+      World.remove(world, toBeRemoved);
+    } else if (bodyA.label === 'border' || bodyB.label === 'border') {
+      World.remove(world, toBeRemoved);
+    }
+  }
+};
+
+const initGame = () => {
+  state.lives = startingLives;
+  const allHearts = document.querySelectorAll('.heart');
+  allHearts.forEach((h) => {
+    h.classList.remove('fade');
+  });
+  state.points = 0;
+  scoreDisplay.innerHTML = `${state.points}`;
+  state.timerId = null;
+};
+
+const startGame = () => {
+  initGame();
+  state.timerId = setInterval(() => {
+    const randomTime = Math.random() * 5000;
+    setTimeout(() => {
+      generateFallingObject();
+    }, randomTime);
+  }, 500);
+};
+
+// Event Listeners
+
+// Detecting two bodies touching
+Events.on(engine, 'collisionStart', (event) => {
+  event.pairs.forEach((collision) => {
+    const { bodyA, bodyB } = collision;
+    // Check if bodyA and bodyB are not lebron and border
+    if (!checkCollisionBodies(bodyA, bodyB)) {
+      handleGameCalcAndRemoveObj(bodyA, bodyB);
+    }
+  });
+});
+
+// Left and Right Key Press
 document.addEventListener('keydown', (event) => {
   const { x, y } = slider.velocity;
   if (event.keyCode === 37) {
@@ -103,58 +268,16 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-// Detecting two bodies touching
-Events.on(engine, 'collisionStart', (event) => {
-  event.pairs.forEach((collision) => {
-    const { bodyA, bodyB } = collision;
-    // Check if bodyA and bodyB are not lebron and border
-    if (!checkCollisionBodies(bodyA, bodyB)) {
-      const toBeRemoved = getFallingBodies(bodyA, bodyB);
-      if (toBeRemoved) {
-        // If either bodyA or bodyB is lebron head
-        if (bodyA.label === 'lebron-head' || bodyB.label === 'lebron-head') {
-          if (toBeRemoved.label === 'taco') {
-            addScore();
-          }
-          if (toBeRemoved.label === 'trophy' || toBeRemoved.label === 'bball') {
-            minusScore();
-            if (lives === 0) {
-              clearInterval(timerId);
-            }
-          }
-          if (toBeRemoved.label === 'heart') {
-            addHeart();
-          }
-          World.remove(world, toBeRemoved);
-        } else if (bodyA.label === 'border' || bodyB.label === 'border') {
-          World.remove(world, toBeRemoved);
-        }
-      }
-    }
-  });
+// Play Again Button
+playAgainBtn.addEventListener('click', () => {
+  playAgainContainer.classList.add('hidden');
+  gameContainer.classList.add('hidden');
+  startContainer.classList.remove('hidden');
 });
 
-let timerId;
-const startGame = () => {
-  // Randomly drop objects
-  timerId = setInterval(() => {
-    const randomTime = Math.random() * 10000;
-    setTimeout(() => {
-      generateFallingObject();
-    }, randomTime)
-  }, 1000)
-};
-
-const startBtn = document.querySelector('#start-btn');
-startBtn.addEventListener('click', () => {
+// Start Game Button
+startGameBtn.addEventListener('click', () => {
+  startContainer.classList.add('hidden');
+  gameContainer.classList.remove('hidden');
   startGame();
-  startBtn.setAttribute('disabled', true);
-  stopbtn.removeAttribute('disabled');
-});
-
-const stopbtn = document.querySelector('#stop-btn');
-stopbtn.addEventListener('click', () => {
-  clearInterval(timerId);
-  startBtn.removeAttribute('disabled');
-  stopbtn.setAttribute('disabled', true);
 });

@@ -1,12 +1,12 @@
 const checkCollisionBodies = (a, b) => {
-  const fixed = ['lebron-head', 'border'];
-  if (fixed.includes(a.label) && fixed.includes(b.label)) {
+  const permanent = ['lebron-head', 'border'];
+  if (permanent.includes(a.label) && permanent.includes(b.label)) {
     return true;
   }
   return false;
 };
 
-const getFallingBodies = (a, b) => {
+const findFallingObj = (a, b) => {
   const fallingObjs = ['taco', 'trophy', 'bball', 'heart'];
   if (fallingObjs.includes(a.label) && fallingObjs.includes(b.label)) {
     return null;
@@ -31,15 +31,6 @@ const getRandomObject = () => {
   }
 };
 
-const getIconFilePath = (icon) => {
-  if (icon === "taco") return './images/svg/Taco_Drop.svg';
-  if (icon === "trophy") return './images/svg/Trophy_Drop.svg';
-  if (icon === "bball") return './images/svg/Basketball_Drop.svg';
-  if (icon === "heart") return './images/svg/Health.svg';
-  if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
-  if (icon === "lebron-hit") return './images/Lebron_Head_Hit.png';
-};
-
 const getRandomXCoordinate = () => {
   // width of canvas is 375px
   let randomX = Math.random() * 375;
@@ -60,6 +51,19 @@ const getScaleFromFallingObject = (obj) => {
   }
 };
 
+const getIconFilePath = (icon) => {
+  if (icon === "taco") return './images/svg/Taco_Drop.svg';
+  if (icon === "trophy") return './images/svg/Trophy_Drop.svg';
+  if (icon === "bball") return './images/svg/Basketball_Drop.svg';
+  if (icon === "heart") return './images/svg/Health.svg';
+  if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
+  if (icon === "lebron-hit") return './images/Lebron_Head_Hit.png';
+  if (icon === "taco-landing-page") return './images/svg/Taco.svg';
+  if (icon === "taco-text") return './images/svg/Taco_Text.svg';
+  if (icon === "tuesday-text") return './images/svg/Tuesday_Text.svg';
+  if (icon === "lebron-start") return './images/Lebron_Head_Main.png';
+};
+
 const updateSliderImg = (slider) => {
   slider.render.sprite.texture = getIconFilePath('lebron-hit');
   slider.render.sprite.xScale = 0.1;
@@ -71,23 +75,68 @@ const updateSliderImg = (slider) => {
   }, 1000);
 };
 
-const addScore = () => {
-  points += 1;
-  scoreDisplay.innerHTML = `${points}`
-};
-
-const minusScore = () => {
-  updateSliderImg(slider);
-  lives--;
-  if (lives >= 0) {
-    const heart = document.querySelector(`.heart-${lives}`);
-    heart.classList.add('fade');
+const tacosProps = [
+  {
+    width: '100px',
+    height: '100px',
+    x: '-150px',
+    y: '0px',
+    angle: '-90deg'
+  },
+  {
+    width: '55px',
+    height: '55px',
+    x: '70px',
+    y: '40px',
+    angle: '-25deg'
+  },
+  {
+    width: '90px',
+    height: '90px',
+    x: '-130px',
+    y: '170px',
+    angle: '-5deg'
+  },
+  {
+    width: '100px',
+    height: '100px',
+    x: '150px',
+    y: '145px',
+    angle: '-75deg'
+  },
+  {
+    width: '90px',
+    height: '90px',
+    x: '-120px',
+    y: '415px',
+    angle: '-85deg'
+  },
+  {
+    width: '140px',
+    height: '140px',
+    x: '155px',
+    y: '300px',
+    angle: '20deg'
+  },
+  {
+    width: '120px',
+    height: '120px',
+    x: '-165px',
+    y: '550px',
+    angle: '-70deg'
+  },
+  {
+    width: '55px',
+    height: '55px',
+    x: '0px',
+    y: '630px',
+    angle: '-5deg'
+  },
+  {
+    width: '85px',
+    height: '85px',
+    x: '145px',
+    y: '580px',
+    angle: '-90deg'
   }
-};
-
-const addHeart = () => {
-  lives++;
-  lives = Math.min(lives, 4);
-  const heart = document.querySelector(`.heart-${lives - 1}`);
-  heart.classList.remove('fade');
-};
+];
