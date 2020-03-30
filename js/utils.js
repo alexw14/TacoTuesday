@@ -19,21 +19,21 @@ const findFallingObj = (a, b) => {
 };
 
 const getRandomObject = () => {
-  const randomNum = Math.random() * 100;
-  if (randomNum < 55) {
+  const randomNum = Math.floor(Math.random() * 100);
+  if (randomNum < 58) {
     return 'taco';
-  } else if (randomNum >= 55 && randomNum < 75) {
+  } else if (randomNum >= 58 && randomNum < 78) {
     return 'trophy';
-  } else if (randomNum >= 75 && randomNum < 95) {
+  } else if (randomNum >= 78 && randomNum < 98) {
     return 'bball';
-  } else if (randomNum >= 95) {
+  } else if (randomNum >= 98) {
     return 'heart';
   }
 };
 
 const getRandomXCoordinate = () => {
   // width of canvas is 375px
-  let randomX = Math.random() * 375;
+  let randomX = Math.floor(Math.random() * 375);
   // randomX needs to be in range of 26 - 349 so as to not collide with left or right border
   if (randomX < 26) {
     randomX += 25;
