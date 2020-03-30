@@ -14,8 +14,8 @@ preload(
   './images/Lebron_Head_Default.png',
   './images/Lebron_Head_Hit.png',
   './images/svg/Taco.svg',
-  './images/svg/Taco_Text.svg',
   './images/svg/Tuesday_Text.svg',
   './images/Lebron_Head_Main_Outline.png',
-  './images/svg/Play.svg'
+  './images/svg/Play.svg',
+  './images/svg/Settings.svg'
 );

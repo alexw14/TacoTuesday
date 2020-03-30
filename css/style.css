@@ -14,9 +14,6 @@ body {
 }
 
 #app,
-.start-container .taco-text,
-.start-container .tuesday-text, 
-.start-container .lebron-start-head,
 .start-container .start-game-btn,
 .game-container,
 .play-again-container {
@@ -36,7 +33,7 @@ body {
 }
 
 .start-container {
-  background-color: #FDBA21;
+  background-color: #fdba21;
   overflow: hidden;
 }
 
@@ -52,8 +49,10 @@ body {
 }
 
 .start-container .taco-text {
+  background: url("../images/svg/Taco_Text.svg") no-repeat center;
   margin-top: 80px;
   margin-bottom: 20px;
+  height: 70px;
 }
 
 .start-container .taco-text img,
@@ -62,12 +61,20 @@ body {
   height: 100%;
 }
 
+.start-container,
 .start-container .taco-text,
-.start-container .tuesday-text, 
+.start-container .tuesday-text,
 .start-container .lebron-start-head,
 .start-container .start-game-btn {
   position: relative;
   z-index: 2;
+}
+
+.start-container .settings img {
+  width: 24px;
+  height: 24px;
+  top: 10px;
+  right: 10px;
 }
 
 .start-container .lebron-start-head img {
@@ -91,11 +98,12 @@ body {
 .start-container .start-game-btn,
 .score-container,
 .play-again-text {
-  font-family: 'Press Start 2P';
+  font-family: "Press Start 2P";
   color: #552583;
   text-transform: uppercase;
 }
 
+.start-container .settings img,
 .start-container .tacos .taco,
 .score-container,
 .hearts-container,
@@ -115,9 +123,8 @@ body {
 }
 
 .hearts-container .heart {
-  background-image: url('../images/svg/Health.svg');
+  background: url("../images/svg/Health.svg") no-repeat center;
   background-size: contain;
-  background-repeat: no-repeat;
   height: 40px;
   width: 40px;
 }
@@ -133,9 +140,8 @@ body {
 }
 
 .play-again-btn {
-  background-image: url('../images/svg/Play.svg');
+  background: url("../images/svg/Play.svg") no-repeat center;
   background-size: contain;
-  background-repeat: no-repeat;
   height: 100px;
   width: 100px;
   margin: 81px auto 24px;
@@ -149,4 +155,44 @@ body {
 
 .play-again-text div {
   margin: 24px 0px;
+}
+
+.tuesday-text {
+  background: url("../images/svg/Tuesday_Text.svg") no-repeat center;
+  height: 50px;
+}
+
+
+.lebron-start-head {
+  background: url("../images/Lebron_Head_Main_Outline.png") no-repeat center;
+  height: 335px;
+  background-size: contain;
+}
+
+.settings {
+  background: url("../images/svg/Settings.svg") no-repeat center;
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  z-index: 5;
+}
+
+.start-container .taco {
+  background: url('../images/svg/Taco.svg') no-repeat center;
+}
+
+.settings-display {
+  width: 300px;
+  position: absolute;
+  background-color: #fff;
+  top: 24px;
+  left: -315px;
+  z-index: 5;
+  padding: 10px;
+  font-family: "Press Start 2P";
+  text-transform: capitalize;
+  line-height: 1.5;
+  opacity: 0.8;
 }

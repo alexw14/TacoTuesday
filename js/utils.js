@@ -58,10 +58,6 @@ const getIconFilePath = (icon) => {
   if (icon === "heart") return './images/svg/Health.svg';
   if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
   if (icon === "lebron-hit") return './images/Lebron_Head_Hit.png';
-  if (icon === "taco-landing-page") return './images/svg/Taco.svg';
-  if (icon === "taco-text") return './images/svg/Taco_Text.svg';
-  if (icon === "tuesday-text") return './images/svg/Tuesday_Text.svg';
-  if (icon === "lebron-start") return './images/Lebron_Head_Main_Outline.png';
 };
 
 const updateSliderImg = (slider) => {
