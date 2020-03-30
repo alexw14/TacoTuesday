@@ -31,19 +31,6 @@ const getRandomObject = () => {
   }
 };
 
-const getIconFilePath = (icon) => {
-  if (icon === "taco") return './images/svg/Taco_Drop.svg';
-  if (icon === "trophy") return './images/svg/Trophy_Drop.svg';
-  if (icon === "bball") return './images/svg/Basketball_Drop.svg';
-  if (icon === "heart") return './images/svg/Health.svg';
-  if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
-  if (icon === "lebron-hit") return './images/Lebron_Head_Hit.png';
-  if (icon === "taco-landing-page") return './images/svg/Taco.svg';
-  if (icon === "taco-text") return './images/svg/Taco_Text.svg';
-  if (icon === "tuesday-text") return './images/svg/Tuesday_Text.svg';
-  if (icon === "lebron-welcome") return './images/Lebron_Head_Main.png';
-};
-
 const getRandomXCoordinate = () => {
   // width of canvas is 375px
   let randomX = Math.random() * 375;
@@ -62,6 +49,19 @@ const getScaleFromFallingObject = (obj) => {
   } else if (obj === 'heart') {
     return 0.3;
   }
+};
+
+const getIconFilePath = (icon) => {
+  if (icon === "taco") return './images/svg/Taco_Drop.svg';
+  if (icon === "trophy") return './images/svg/Trophy_Drop.svg';
+  if (icon === "bball") return './images/svg/Basketball_Drop.svg';
+  if (icon === "heart") return './images/svg/Health.svg';
+  if (icon === "lebron-head") return './images/Lebron_Head_Default.png';
+  if (icon === "lebron-hit") return './images/Lebron_Head_Hit.png';
+  if (icon === "taco-landing-page") return './images/svg/Taco.svg';
+  if (icon === "taco-text") return './images/svg/Taco_Text.svg';
+  if (icon === "tuesday-text") return './images/svg/Tuesday_Text.svg';
+  if (icon === "lebron-start") return './images/Lebron_Head_Main.png';
 };
 
 const updateSliderImg = (slider) => {
@@ -107,7 +107,7 @@ const tacosProps = [
   {
     width: '90px',
     height: '90px',
-    x: '-110px',
+    x: '-120px',
     y: '415px',
     angle: '-85deg'
   },
@@ -121,7 +121,7 @@ const tacosProps = [
   {
     width: '120px',
     height: '120px',
-    x: '-175px',
+    x: '-165px',
     y: '550px',
     angle: '-70deg'
   },
