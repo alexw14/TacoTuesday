@@ -61,7 +61,7 @@ const getIconFilePath = (icon) => {
   if (icon === "taco-landing-page") return './images/svg/Taco.svg';
   if (icon === "taco-text") return './images/svg/Taco_Text.svg';
   if (icon === "tuesday-text") return './images/svg/Tuesday_Text.svg';
-  if (icon === "lebron-start") return './images/Lebron_Head_Main.png';
+  if (icon === "lebron-start") return './images/Lebron_Head_Main_Outline.png';
 };
 
 const updateSliderImg = (slider) => {
