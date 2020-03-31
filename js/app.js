@@ -157,7 +157,7 @@ const addScore = () => {
 };
 
 const addHeart = () => {
-  if (state.lives < 4 && state.lives > 0) {
+  if (state.lives < startingLives && state.lives > 0) {
     state.lives++;
     const heart = document.querySelector(`.heart-${state.lives - 1}`);
     heart.classList.remove("fade");

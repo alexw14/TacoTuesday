@@ -6,59 +6,26 @@ body {
   display: none !important;
 }
 
+/*-- App --*/
+
 #app {
   background-color: #fff;
-  margin: 0 auto;
-  align-items: center;
-  position: relative;
-}
-
-#app,
-.start-container .start-game-btn,
-.game-container,
-.play-again-container {
   display: flex;
   justify-content: center;
-}
-
-#app,
-.start-container,
-.play-again-container {
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
   width: 375px;
 }
 
-.start-container,
-.game-container {
-  height: 667px;
-}
+/*-- Start Section --*/
 
 .start-container {
   background-color: #fdba21;
+  width: 375px;
+  height: 667px;
+  border-radius: 24px;
   overflow: hidden;
-}
-
-.start-container .tacos {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.start-container .tacos .taco {
-  z-index: 1;
-}
-
-.start-container .taco-text {
-  background: url("../images/svg/Taco_Text.svg") no-repeat center;
-  margin-top: 80px;
-  margin-bottom: 20px;
-  height: 70px;
-}
-
-.start-container .taco-text img,
-.start-container .tuesday-text img {
-  width: 300px;
-  height: 100%;
 }
 
 .start-container,
@@ -70,56 +37,63 @@ body {
   z-index: 2;
 }
 
-.start-container .settings img {
-  width: 24px;
-  height: 24px;
-  top: 10px;
-  right: 10px;
+.start-container .tacos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-.start-container .lebron-start-head img {
-  width: 275px;
-  height: 100%;
+.start-container .taco {
+  background: url("../images/svg/Taco.svg") no-repeat center;
+  z-index: 1;
+  position: absolute;
+}
+
+.start-container .taco-text {
+  background: url("../images/svg/Taco_Text.svg") no-repeat center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  height: 70px;
+}
+
+.lebron-start-head {
+  background: url("../images/Lebron_Head_Main_Outline.png") no-repeat center;
+  height: 335px;
+  background-size: contain;
+}
+
+.start-container .tuesday-text {
+  background: url("../images/svg/Tuesday_Text.svg") no-repeat center;
+  height: 50px;
 }
 
 .start-container .start-game-btn {
+  display: flex;
+  justify-content: center;
   width: 200px;
   height: 50px;
   margin: 24px auto;
   align-items: center;
   cursor: pointer;
-}
-
-.start-container,
-.game-container .game-area canvas {
-  border-radius: 24px;
-}
-
-.start-container .start-game-btn,
-.score-container,
-.play-again-text {
   font-family: "Press Start 2P";
   color: #552583;
   text-transform: uppercase;
 }
 
-.start-container .settings img,
-.start-container .tacos .taco,
-.score-container,
-.hearts-container,
-.play-again-container {
-  position: absolute;
-}
+/*-- Game Section --*/
 
-.score-container {
-  font-size: 3em;
-  top: 150px;
+.game-container {
+  display: flex;
+  justify-content: center;
+  height: 667px;
 }
 
 .hearts-container {
   display: flex;
   top: 10px;
   left: 10px;
+  position: absolute;
 }
 
 .hearts-container .heart {
@@ -133,7 +107,25 @@ body {
   opacity: 0.4;
 }
 
+.score-container {
+  font-family: "Press Start 2P";
+  color: #552583;
+  font-size: 3em;
+  position: absolute;
+  top: 150px;
+}
+
+.game-container .game-area canvas {
+  border-radius: 24px;
+}
+
+/*-- Play Again Section --*/
+
 .play-again-container {
+  display: flex;
+  justify-content: center;
+  width: 375px;
+  position: absolute;
   z-index: 2;
   flex-direction: column;
   align-items: center;
@@ -149,6 +141,9 @@ body {
 }
 
 .play-again-text {
+  font-family: "Press Start 2P";
+  color: #552583;
+  text-transform: uppercase;
   font-size: 1.5em;
   text-align: center;
 }
@@ -157,17 +152,7 @@ body {
   margin: 24px 0px;
 }
 
-.tuesday-text {
-  background: url("../images/svg/Tuesday_Text.svg") no-repeat center;
-  height: 50px;
-}
-
-
-.lebron-start-head {
-  background: url("../images/Lebron_Head_Main_Outline.png") no-repeat center;
-  height: 335px;
-  background-size: contain;
-}
+/*-- Settings --*/
 
 .settings {
   background: url("../images/svg/Settings.svg") no-repeat center;
@@ -179,18 +164,14 @@ body {
   z-index: 5;
 }
 
-.start-container .taco {
-  background: url('../images/svg/Taco.svg') no-repeat center;
-}
-
 .settings-display {
   width: 300px;
   position: absolute;
   background-color: #fff;
   top: 24px;
-  left: -315px;
+  left: -312px;
   z-index: 5;
-  padding: 10px;
+  padding: 8px;
   font-family: "Press Start 2P";
   text-transform: capitalize;
   line-height: 1.5;
