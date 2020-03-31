@@ -193,7 +193,7 @@ const generateFallingObject = () => {
   const fallingObj = getRandomObject();
   const randomX = getRandomXCoordinate();
   const scale = getScaleFromFallingObject(fallingObj);
-  const itemToDrop = Bodies.rectangle(randomX, -100, 50, 50, {
+  const itemToDrop = Bodies.rectangle(randomX, -100, 30, 30, {
     label: fallingObj,
     inertia: Infinity,
     render: {
