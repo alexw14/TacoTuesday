@@ -29,6 +29,7 @@ body {
 }
 
 .start-container,
+.start-container .tacos,
 .start-container .taco-text,
 .start-container .tuesday-text,
 .start-container .lebron-start-head,
@@ -41,7 +42,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 }
 
 .start-container .taco {

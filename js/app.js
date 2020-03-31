@@ -22,7 +22,8 @@ const startingLives = 4;
 const state = {
   lives: 0,
   points: 0,
-  timerId: null
+  timerId: null,
+  highScore: null
 };
 
 // Create engine
@@ -74,7 +75,7 @@ const borders = [
 World.add(world, borders);
 
 // Lebron head slider
-const slider = Bodies.rectangle(width / 2, height - 200, 50, 50, {
+const slider = Bodies.rectangle(width / 2, height - 100, 50, 50, {
   label: "lebron-head",
   isStatic: false,
   inertia: Infinity,
@@ -91,7 +92,7 @@ World.add(world, slider);
 // Settings icon
 const settingsBtn = document.querySelector(".settings");
 const settingsDisplay = document.createElement("div");
-settingsDisplay.classList.add("settings-display", "hidden");
+settingsDisplay.classList.add("settings-display");
 settingsDisplay.innerHTML = "Use left and right arrow keys to move";
 settingsBtn.appendChild(settingsDisplay);
 
@@ -136,16 +137,15 @@ scoreContainer.appendChild(scoreDisplay);
 
 // Play again
 const playAgainContainer = document.querySelector(".play-again-container");
-const playAgainBtn = document.createElement("div");
-playAgainBtn.classList.add("play-again-btn");
-playAgainContainer.appendChild(playAgainBtn);
-const playAgainText = document.createElement("div");
-playAgainText.classList.add("play-again-text");
-playAgainText.innerHTML = `
-  <div>Game Over</div>
-  <div>More Tacos?</div>
+playAgainContainer.innerHTML = `
+  <div class="play-again-btn"></div>
+  <div class="play-again-text">
+    <div class="high-score">Best Score: <span></span></div>
+    <div>More Tacos?</div>
+  </div>
 `;
-playAgainContainer.appendChild(playAgainText);
+const playAgainBtn = document.querySelector(".play-again-btn");
+const highScoreDisplay = document.querySelector(".high-score span");
 
 // Game logic
 
@@ -173,9 +173,19 @@ const minusHeart = () => {
   }
   // Game Over
   if (state.lives === 0) {
-    clearInterval(state.timerId);
-    playAgainContainer.classList.remove("hidden");
+    endGame();
   }
+};
+
+// Game over
+const endGame = () => {
+  clearInterval(state.timerId);
+  if (state.points > state.highScore) {
+    state.highScore = state.points;
+    localStorage.setItem("highscore", state.points);
+    highScoreDisplay.innerText = state.highScore;
+  }
+  playAgainContainer.classList.remove("hidden");
 };
 
 // Generate one random falling object
@@ -199,22 +209,18 @@ const generateFallingObject = () => {
 
 const handleGameCalcAndRemoveObj = (bodyA, bodyB) => {
   const toBeRemoved = findFallingObj(bodyA, bodyB);
+  // The object to be removed will be returned at index 0
   if (toBeRemoved) {
-    // If either bodyA or bodyB is lebron head
-    if (bodyA.label === "lebron-head" || bodyB.label === "lebron-head") {
-      if (toBeRemoved.label === "taco") {
+    if (toBeRemoved[1].label === "lebron-head") {
+      if (toBeRemoved[0].label === "taco") {
         addScore();
-      }
-      if (toBeRemoved.label === "trophy" || toBeRemoved.label === "bball") {
+      } else if (toBeRemoved[0].label === "heart") {
+        addHeart();
+      } else {
         minusHeart();
       }
-      if (toBeRemoved.label === "heart") {
-        addHeart();
-      }
-      World.remove(world, toBeRemoved);
-    } else if (bodyA.label === "border" || bodyB.label === "border") {
-      World.remove(world, toBeRemoved);
     }
+    World.remove(world, toBeRemoved[0]);
   }
 };
 
@@ -246,7 +252,7 @@ Events.on(engine, "collisionStart", event => {
   event.pairs.forEach(collision => {
     const { bodyA, bodyB } = collision;
     // Check if bodyA and bodyB are not lebron and border
-    if (!checkCollisionBodies(bodyA, bodyB)) {
+    if (checkCollisionBodies(bodyA, bodyB)) {
       handleGameCalcAndRemoveObj(bodyA, bodyB);
     }
   });
@@ -261,6 +267,18 @@ document.addEventListener("keydown", event => {
   if (event.keyCode === 39) {
     Body.setVelocity(slider, { x: x + 5, y });
   }
+});
+
+// On load
+document.addEventListener("DOMContentLoaded", () => {
+  const localHighscore = localStorage.getItem("highscore");
+  if (localHighscore) {
+    state.highScore = parseInt(localHighscore);
+    highScoreDisplay.innerText = state.highScore;
+  }
+  setTimeout(() => {
+    settingsDisplay.classList.add("hidden");
+  }, 2000);
 });
 
 // Hover on settings icon
